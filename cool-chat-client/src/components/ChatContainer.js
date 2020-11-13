@@ -17,23 +17,35 @@ function ChatContainer(props) {
     const [user, setUser] = useState();
     const [users, setUsers] = useState([]);
     const [openSnackbar, setOpenSnackbar] = useState(false);
+    const [intialHandshake, setIntialHandshakeComplete] = useState(false);
 
     useEffect(() => {
         if (!socket) {
             setSocket(io());
+        } else if (!intialHandshake) {
+            if (!user) {
+                socket.emit('user connected');
+            }
+            if (!users.length) {
+                console.log('emitting active users')
+                socket.emit('active users');
+            }
+            if (!messages.length) {
+                console.log('emitting active messages')
+                socket.emit('active messages');
+            }
+            setIntialHandshakeComplete(true)
         } else {
+            console.log('initial handshake done')
             socket.on('user connected', handleUserConnected);
             socket.on('active users', handleActiveUsers);
             socket.on('active messages', handleActiveMessages)
             socket.on('chat message', recieveMessage);
         }
-      });
+      }, [socket, setSocket, intialHandshake, setIntialHandshakeComplete, users, user]);
 
     const handleUserConnected = (userId) => {
-        console.log(user)
-        console.log(userId)
         if (!user || !Cookies.get('userId')) {
-            console.log('setting new user')
             setUser(userId);
             Cookies.set('userId', userId.userId, {expires: 7});
             Cookies.set('userColorId', userId.color, {expires: 7});
@@ -58,7 +70,11 @@ function ChatContainer(props) {
     }
 
     const recieveMessage = (message) => {
+        if (messages.length > 0 && message === messages[messages.length - 1]){
+            return
+        }
         setMessages([...messages, message]);
+        messages.push(message)
     }
 
     const handleSnackBarClose = () => {
@@ -67,14 +83,14 @@ function ChatContainer(props) {
 
     return (
         <div className="chat-container-content">
-        <Snackbar open={openSnackbar} autoHideDuration={3000} onClose={handleSnackBarClose}>
-                {`Welcome ${user && user.userId}!`}
-        </Snackbar>
+        <Snackbar open={openSnackbar} autoHideDuration={3000} onClose={handleSnackBarClose} message={`Welcome ${user && user.userId}!`} anchorOrigin={{vertical: 'top', horizontal: 'center',
+        }}/>
             <div className="left-content-container">
                 <Paper className="chat-content">
                     <div className="chat-output-container">
                         <ChatOutput
                             user={user}
+                            users={users}
                             messages={messages}
                         />
                     </div>

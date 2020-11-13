@@ -1,6 +1,8 @@
 .App {
   text-align: center;
   margin: auto;
+  height: 99vh;
+  max-width: 960px;
 }
 
 .chat-container {
@@ -58,6 +60,8 @@
   width: calc(100% - 10px);
   display: inline-block;
   padding: 5px;
+  overflow-y: auto;
+  max-height: calc(100% - 28px);
 }
 
 .chat-input-field {
@@ -68,7 +72,7 @@
   padding: 5px;
   width: calc(100% - 10px);
   height: 40px;
-  margin-top: 10px;
+  margin-top: 15px;
 }
 
 .message-bubble-left {
@@ -91,15 +95,13 @@
   padding: 5px;
   height: calc(100% - 10px);
   float: right;
-  background-color: aqua;
+  /* background-color: aqua; */
   border-radius: 15px;
 }
 
 .message-content-left {
   height: 100%;
   float: left;
-  /* background-color: plum;
-  border-radius: 10px; */
 }
 
 .message-filler-right {
@@ -116,20 +118,7 @@
   height: calc(100% - 12px);
   float: left;
   width: auto;
-  background-color: plum;
+  /* background-color: plum; */
   border-radius: 10px;
   padding: 5px;
-}
-
-@media screen and (orientation:portrait) { 
-  .App {
-    width: 100%;
-    max-height: calc(100%-100px);
-  }
-}
-@media screen and (orientation:landscape) {
-  .App {
-    height: 99vh;
-    max-width: 960px;
-  }
 }

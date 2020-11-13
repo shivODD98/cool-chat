@@ -15,6 +15,10 @@ function UsersList(props) {
         users,
     } = props;
 
+    useEffect(() => {
+        console.log('updating users')
+      }, [users]);
+
     const renderUsersList = () => {
         return (
             <List subheader={<ListSubheader>Online Users</ListSubheader>} dense>
