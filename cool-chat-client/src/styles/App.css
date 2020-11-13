@@ -53,7 +53,7 @@
 
 .chat-output-field {
   position: absolute; 
-  bottom: 10px;
+  bottom: 15px;
   left: 0;
   width: calc(100% - 10px);
   display: inline-block;

@@ -10,18 +10,22 @@ import {
 } from '@material-ui/core';
 
 function UsersList(props) {
+    const {
+        user,
+        users,
+    } = props;
 
     const renderUsersList = () => {
         return (
             <List subheader={<ListSubheader>Online Users</ListSubheader>} dense>
-                {[0, 1, 2, 3].map((value) => {
+                {users.map((value) => {
                 return (
                     <ListItem key={value} button>
                         <ListItemAvatar>
                             <Avatar
                             />
                         </ListItemAvatar>
-                        <ListItemText primary={`Line item ${value + 1}`} />
+                        <ListItemText primary={`${value.userId} ${value.userId === user.userId ? '(You)' : ''}`} />
                     </ListItem>
                 );
                 })}

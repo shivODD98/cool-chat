@@ -5,26 +5,26 @@ import {
 } from '@material-ui/core';
 
 function ChatOutput(props) {
-    const messages = [
-        {userId: 1, message: 'yooooo'},
-    ]
+    const {
+        messages,
+        user,
+    } = props;
 
     const renderMessageitem = (message) => {
-        const thisUser = 1;
-        if (message.userId === thisUser) {
+        if (message.userId === user.userId) {
             return (
                 <div className="message-bubble-right">
-                    <div className="message-filler-left"><Typography variant="caption" color="textSecondary">6:30pm</Typography></div>
-                    <div className="message-content-right">{message.message}</div>
+                    <div className="message-filler-left"><Typography variant="caption" color="textSecondary">{message.formatedTimeStamp}</Typography></div>
+                    <div className="message-content-right" style={{backgroundColor: user && user.color}}>{message.message}</div>
                 </div>
             )
         }
         return (
             <div className="message-bubble-left">
                 <div className="message-content-left">
-                    <div className="message-content-username"><Typography variant="caption" color="textSecondary">User Name 6:30pm</Typography></div>
+                    <div className="message-content-username"><Typography variant="caption" color="textSecondary">{`${message.userId} ${message.formatedTimeStamp}`}</Typography></div>
                     <br/>
-                    <div className="message-content-message">{message.message}</div>
+                    <div className="message-content-message" style={{backgroundColor: user && user.color}} >{message.message}</div>
                 </div>
                 <div className="message-filler-right"></div>
             </div>
