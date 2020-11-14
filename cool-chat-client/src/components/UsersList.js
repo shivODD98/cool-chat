@@ -16,7 +16,6 @@ function UsersList(props) {
     } = props;
 
     useEffect(() => {
-        console.log('updating users')
       }, [users]);
 
     const renderUsersList = () => {
@@ -29,7 +28,7 @@ function UsersList(props) {
                             <Avatar
                             />
                         </ListItemAvatar>
-                        <ListItemText primary={`${value.userId} ${value.userId === user.userId ? '(You)' : ''}`} />
+                        <ListItemText primary={`${value.userName} ${value.userId === user.userId ? '(You)' : ''}`} />
                     </ListItem>
                 );
                 })}

@@ -13,7 +13,6 @@ function ChatOutput(props) {
     } = props;
 
     useEffect(() => {
-        console.log('updating messages')
         scrollToBottom();
       }, [messages]);
 
@@ -23,23 +22,32 @@ function ChatOutput(props) {
 
     const renderMessageitem = (message) => {
         if (message.userId === user.userId) {
+            let usersColor = '';
+            let userName = '';
+            for (let i = 0; i < users.length; i++) {
+                if (users[i] && users[i].userId === message.userId) {
+                    usersColor = users[i].color;
+                }
+            }
             return (
                 <div className="message-bubble-right">
                     <div className="message-filler-left"><Typography variant="caption" color="textSecondary">{message.formatedTimeStamp}</Typography></div>
-                    <div className="message-content-right" style={{backgroundColor: user && user.color}}>{message.message}</div>
+                    <div className="message-content-right" style={{backgroundColor: usersColor}}>{message.message}</div>
                 </div>
             )
         }
         let usersColor = '';
+        let userName = '';
         for (let i = 0; i < users.length; i++) {
             if (users[i] && users[i].userId === message.userId) {
                 usersColor = users[i].color;
+                userName = users[i].userName;
             }
         }
         return (
             <div className="message-bubble-left">
                 <div className="message-content-left">
-                    <div className="message-content-username"><Typography variant="caption" color="textSecondary">{`${message.userId} ${message.formatedTimeStamp}`}</Typography></div>
+                    <div className="message-content-username"><Typography variant="caption" color="textSecondary">{`${userName} ${message.formatedTimeStamp}`}</Typography></div>
                     <br/>
                     <div className="message-content-message" style={{backgroundColor: usersColor}}>{message.message}</div>
                 </div>
